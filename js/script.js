@@ -1,4 +1,33 @@
-var model = {
+var ViewModel = function() {
+    this.clickCount = ko.observable(0);
+    this.title = ko.observable('Frank');
+    this.imageSource = ko.observable('image/Frank.jpg');
+    this.imageAttribution = ko.observable('Udacity FEND Nano Degree');
+    this.catLevel = ko.computed(function() {
+        var retval = 'oldster';
+        if (this.clickCount() < 5) {
+            retval = 'infant';
+        } else if (this.clickCount() < 10) {
+            retval = 'youth'
+        } else if (this.clickCount() < 20) {
+            retval = 'teenager'
+        } else if (this.clickCount() < 50) {
+            retval = 'adult'
+        } else if (this.clickCount() < 75) {
+            retval = 'senior'
+        }
+        return retval;
+    }, this);
+
+    this.incrementCounter = function() {
+        this.clickCount(this.clickCount() + 1);
+    }
+}
+
+ko.applyBindings(new ViewModel());
+
+
+/*var model = {
 	currentCat: null,
 	cats: [
 		{
@@ -126,3 +155,4 @@ $(document).ready(function() {
     $('.cat-title1').text(catTitle1);
     $('.cat-title2').text(catTitle2);
 });
+*/

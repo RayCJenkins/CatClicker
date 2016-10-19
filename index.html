@@ -11,11 +11,14 @@
 
     <ul id="cat-list"></ul>
     <div id="cat">
-        <h3 id="cat-clicked"></h3>
-        <h4 id="cat-title"></h4>
-        <img id="cat-image" src="" alt="cute cat"/>
+        <h3 data-bind='text: clickCount'></h3>
+        <h4 data-bind='text: catLevel'></h4>
+        <h5 data-bind='text: title'></h5>
+
+        <img src="" alt="cute cat" data-bind='click: incrementCounter, attr: {src: imageSource}'>
     </div>
     <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/knockout-3.4.0.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>
