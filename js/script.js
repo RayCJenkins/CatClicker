@@ -1,8 +1,39 @@
-var ViewModel = function() {
-    this.clickCount = ko.observable(0);
-    this.title = ko.observable('Frank');
-    this.imageSource = ko.observable('image/Frank.jpg');
-    this.imageAttribution = ko.observable('Udacity FEND Nano Degree');
+var initialCats = [
+        {
+            clickCount: 0,
+            title: 'Frank',
+            imageSource: 'image/frank.jpg',
+            imageAttribution: 'udacity Cat Clicker Exercises',
+            catNickNames: ['Maico', 'Buddy', 'Little Boy', 'Russell']
+        },
+        {
+            clickCount: 0,
+            title: 'Tony',
+            imageSource: 'image/tony.jpg',
+            imageAttribution: 'udacity Cat Clicker Exercises',
+            catNickNames: ['Anthony', 'Rulon']
+        },
+        {
+            clickCount: 0,
+            title: 'Cutey',
+            imageSource: 'image/cat-636172__180.jpg',
+            imageAttribution: 'https://pixabay.com',
+            catNickNames: ['Snooty Patooty', 'Wannabee']
+        },
+        {
+            clickCount: 0,
+            title: 'Tiger',
+            imageSource: 'image/leopard-694460__180.jpg',
+            imageAttribution: 'https://pixabay.com',
+            catNickNames: ['Tigger', 'Bouncy Pouncy']
+        }
+    ]
+
+var Cat = function(data) {
+    this.clickCount = ko.observable(data.clickCount);
+    this.title = ko.observable(data.title);
+    this.imageSource = ko.observable(data.imageSource);
+    this.imageAttribution = ko.observable(data.imageAttribution);
     this.catLevel = ko.computed(function() {
         var retval = 'oldster';
         if (this.clickCount() < 5) {
@@ -19,8 +50,26 @@ var ViewModel = function() {
         return retval;
     }, this);
 
+    this.catNickNames = ko.observableArray(data.catNickNames);
+};
+
+var ViewModel = function() {
+    var self = this;
+
+    this.catList = ko.observableArray([]);
+
+    initialCats.forEach(function(catItem) {
+        self.catList.push(new Cat(catItem));
+    });
+
+    this.currentCat = ko.observable(this.catList()[0]);
+
     this.incrementCounter = function() {
-        this.clickCount(this.clickCount() + 1);
+        self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+    }
+
+    this.selectCurrentCat = function(clickedCat) {
+        self.currentCat(clickedCat);
     }
 }
 
